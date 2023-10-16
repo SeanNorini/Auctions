@@ -1,0 +1,50 @@
+body {
+  font-family: sans-serif;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin-left: 1rem;
+}
+
+a {
+  text-decoration: none;
+  font-size: 1.7rem;
+  color: blue;
+}
+
+a:hover {
+  transition: all .3s ease-in;
+  color: red;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-right {
+  display: flex;
+  flex-direction: row;
+}

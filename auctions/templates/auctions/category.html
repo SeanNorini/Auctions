@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  {% if auctions %}
+    <h2>{{ auctions.0.category }}</h2>
+    {% for auction in auctions %}
+      <div>
+        <h1><a href="{% url 'listing' id=auction.auction_id %}">{{ auction.auctioneer }}</a></h1>
+        <p>{{ auction.item_name }}<br>Price: ${{ auction.bid }}
+        <br>Desc: {{ auction.item_desc }}
+        <br><img src="{{ auction.item_image.url }}">
+        <br>Created: {{ auction.date_created }}
+        <br>Ends: {{ auction.date_ends }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>Category does not exist.</p>
+  {% endif %}
+{% endblock %}

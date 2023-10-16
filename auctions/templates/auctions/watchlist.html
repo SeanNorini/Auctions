@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    <h1><a href="{% url 'category' category_name='horses' %}">Horses</a></h1>
+    <h1><a href="{% url 'category' category_name='junk' %}">Junk</a></h1>
+    {% if auctions %}
+      {% for auction in auctions %}
+      
+        <div>
+          <h1><a href="{% url 'listing' id=auction.auction_id %}">{{ auction.auctioneer }}</a></h1>
+          <p>{{ auction.item_name }}<br>Price: ${{ auction.bid }}
+          <br>Desc: {{ auction.item_desc }}
+          <br><img src="{{ auction.item_image.url }}">
+          <br>Created: {{ auction.date_created }}
+          <br>Ends: {{ auction.date_ends }}
+          <br>Category: <a href="{% url 'category' category_name=auction.category %}">{{ auction.category}}</a></p>
+
+        </div>
+      {% endfor %}
+    {% else %}
+      No auctions watchlisted.
+    {% endif %}
+{% endblock %}
