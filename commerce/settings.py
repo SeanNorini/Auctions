@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import dj_database_url
-from decouple import config
+
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -87,25 +87,22 @@ DATABASES = {
 
     'default': {
 
-        'ENGINE': 'django_cockroachdb',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'defaultdb',
+        'NAME': 'postgres',
 
-        'USER': 'sean',
+        'USER': 'postgres',
 
-        'PASSWORD': 'FLGMsQ37wBmfvc_xukKDIw',
+        'PASSWORD': 'WakeTech2023',
 
-        'HOST': 'gaunt-serpent-5870.g8z.cockroachlabs.cloud',
+        'HOST': 'db.zndwnwchqhdwsiskyjty.supabase.co',
 
-        'PORT': '26257',
+        'PORT': '5432',
 
-        'OPTIONS': {
-            'sslmode': 'verify-full'
-
-    },
+    }
 
 }
-}
+
 
 AUTH_USER_MODEL = 'auctions.User'
 
