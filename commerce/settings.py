@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +27,7 @@ SECRET_KEY = '6ps8j!crjgrxt34cqbqn7x&b3y%(fny8k8nh21+qa)%ws3fh!q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 
 
 # Application definition
@@ -81,6 +83,30 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django_cockroachdb',
+
+        'NAME': 'defaultdb',
+
+        'USER': 'sean',
+
+        'PASSWORD': 'FLGMsQ37wBmfvc_xukKDIw',
+
+        'HOST': 'gaunt-serpent-5870.g8z.cockroachlabs.cloud',
+
+        'PORT': '26257',
+
+        'OPTIONS': {
+            'sslmode': 'verify-full'
+
+    },
+
+}
+}
+
 AUTH_USER_MODEL = 'auctions.User'
 
 # Password validation
@@ -121,5 +147,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = 'E:\Projects\CS50W\Project 2\commerce\media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
