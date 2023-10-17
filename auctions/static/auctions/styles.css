@@ -48,3 +48,14 @@ a:hover {
   display: flex;
   flex-direction: row;
 }
+
+.index-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+}
+
+.listing-container {
+  min-width: 20rem;
+  min-height: 20rem;
+}

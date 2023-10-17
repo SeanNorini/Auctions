@@ -15,9 +15,9 @@
     </form>
     {% for auction in auctions %}
     
-      <div>
+      <div class="index-listing-container">
         <img src="{{ auction.item_image.url }}">
-        <h1><a href="{% url 'listing' id=auction.auction_id %}">{{ auction.auctioneer }}</a></h1>
+        <h1><a href="{% url 'listing' id=auction.auction_id %}">{{ auction.username }}</a></h1>
         <p>{{ auction.item_name }}<br>Current Bid: ${{ auction.bid }}
         <br>Desc: {{ auction.item_desc }}
         <br>Created: {{ auction.date_created }}

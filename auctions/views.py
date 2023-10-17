@@ -94,7 +94,7 @@ def bid(request, id):
             auction.bid = request.POST["bid"]
             auction.save()
             new_bid = AuctionBid()
-            new_bid.user = request.user
+            new_bid.username  = request.user
             new_bid.auction = AuctionListing.objects.get(auction_id=id)
             new_bid.bid = request.POST["bid"]
             new_bid.save()
@@ -124,7 +124,7 @@ def add_listing(request):
         form = CreateAuction(request.POST, request.FILES)
         if form.is_valid():
             auction = AuctionListing()
-            auction.auctioneer = request.user
+            auction.username  = request.user
             auction.item_name = form.cleaned_data['item_name']
             auction.item_desc = form.cleaned_data['item_desc']
             auction.item_image = form.cleaned_data['item_image']
@@ -149,7 +149,7 @@ class CreateAuction(forms.Form):
 def add_comment(request, id):
     if request.method == "POST":
         new_comment = AuctionComment()
-        new_comment.user = request.user
+        new_comment.username  = request.user
         new_comment.auction = AuctionListing.objects.get(auction_id=id)
         new_comment.comment = request.POST["comment"]
         new_comment.save()
