@@ -106,7 +106,7 @@ def bid(request, id):
     
 
 def watchlist(request):
-    auctions = request.user.watchlist_user.all()
+    auctions = request.user.user_watchlist.all()
     return render(request, "auctions/watchlist.html", {"auctions":auctions})
 
 
