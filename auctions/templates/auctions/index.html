@@ -13,9 +13,10 @@
       </select>
       <button type="submit">Select</button>
     </form>
+    <div class="index-container">
     {% for auction in auctions %}
     
-      <div class="index-listing-container">
+      <div class="listing-container">
         <img src="{{ auction.item_image.url }}">
         <h1><a href="{% url 'listing' id=auction.auction_id %}">{{ auction.username }}</a></h1>
         <p>{{ auction.item_name }}<br>Current Bid: ${{ auction.bid }}
@@ -25,5 +26,6 @@
         <br>Category: <a href="{% url 'category' category_name=auction.category %}">{{ auction.category}}</a></p>
       </div>
     {% endfor %}
+    </div>
   </div>    
 {% endblock %}
