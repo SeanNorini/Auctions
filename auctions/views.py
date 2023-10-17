@@ -66,11 +66,16 @@ def register(request):
         return render(request, "auctions/register.html")
     
 def listing(request, id):
+    # Get listing information from DB
     comments = AuctionComment.objects.filter(auction=id)
     auction = AuctionListing.objects.filter(pk=id).first()
-    bid = AuctionBid.objects.filter(auction=id).order_by("-bid")     
+    bid = AuctionBid.objects.filter(auction=id).order_by("-bid")
+
+    # If a bid has been placed on the auction, get the highest bid.     
     if len(bid) > 0:
         bid = bid[0]
+
+    # If a valid auction was found, using listing template to create auction listing.
     if auction is not None:
         watchlist = auction.watchlist.all()
         return render(request, "auctions/listing.html", {"auction": auction, "watchlist": watchlist, "comments": comments, "bid": bid})
@@ -78,8 +83,9 @@ def listing(request, id):
         return render(request, "auctions/listing.html")
 
 def update_watchlist(request, id):
-    auction = AuctionListing.objects.filter(pk=id).first()
     if request.method == "POST":
+        # Get auction from DB and update user watchlist status
+        auction = AuctionListing.objects.filter(pk=id).first()
         if request.POST["watchlist"] == "add":
             auction.watchlist.add(request.user)
         else:
@@ -90,6 +96,7 @@ def update_watchlist(request, id):
 def bid(request, id):
     if request.method == "POST":
         auction = AuctionListing.objects.filter(pk=id).first()
+        # Check if bid is a valid amount and then update DB
         if float(request.POST["bid"]) > auction.bid:
             auction.bid = request.POST["bid"]
             auction.save()
@@ -106,14 +113,20 @@ def bid(request, id):
     
 
 def watchlist(request):
+    # Get all items user has watchlisted
     auctions = request.user.user_watchlist.all()
     return render(request, "auctions/watchlist.html", {"auctions":auctions})
 
 
 def category(request, category_name):
+    # Get category value from dropdown menu
     if request.method == "POST":
         category_name = request.POST['category']
+    
+    # Get auction list for category
     auctions = list(AuctionListing.objects.filter(category=category_name))
+    
+    # Display auctions if any exist
     if len(auctions) > 0:
         return render(request, "auctions/category.html", {"auctions": auctions})
     else:
@@ -121,6 +134,7 @@ def category(request, category_name):
     
 def add_listing(request):
     if request.method == "POST":
+        # Process listing after form entry and add to DB
         form = CreateAuction(request.POST, request.FILES)
         if form.is_valid():
             auction = AuctionListing()
@@ -138,15 +152,8 @@ def add_listing(request):
     else:
         return render(request, "auctions/add_listing.html", {"form": CreateAuction()})  
 
-class CreateAuction(forms.Form):
-    item_name = forms.CharField(label="item_name")
-    item_desc = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50, 'label':'item_desc'}))
-    item_image = forms.ImageField(label="item_image")
-    date_ends = forms.DateField(label="date_ends")
-    category = forms.CharField(label="category")
-    bid = forms.FloatField(label="bid")
-
 def add_comment(request, id):
+    # Add comment to current auction listing
     if request.method == "POST":
         new_comment = AuctionComment()
         new_comment.username  = request.user
@@ -156,8 +163,18 @@ def add_comment(request, id):
     return HttpResponseRedirect(reverse("listing", args=(id, )))
 
 def close_auction(request, id):
+    # Set current auction to closed
     if request.method == 'POST':
         auction = AuctionListing.objects.get(auction_id=id)
         auction.status = False
         auction.save()
     return HttpResponseRedirect(reverse("listing", args=(id, )))
+
+# Class to create a Django form to add auctions
+class CreateAuction(forms.Form):
+    item_name = forms.CharField(label="Item Name")
+    item_desc = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50, 'label':'Description'}))
+    item_image = forms.ImageField(label="Image")
+    date_ends = forms.DateField(label="Date Ends")
+    category = forms.CharField(label="Category")
+    bid = forms.FloatField(label="Starting Bid Amount")
