@@ -6,7 +6,7 @@
     <form action="{% url 'category' category_name='redirect' %}" method="POST">
       {% csrf_token %}
       <label for="category">Category:</label>
-      <select name="category" value="category">
+      <select id="category" value="category">
         <option value="Shoes">Shoes</option>
         <option value="Shirts">Shirts</option>
         <option value="Pants">Pants</option>

@@ -56,6 +56,11 @@ a:hover {
 }
 
 .listing-container {
-  min-width: 20rem;
-  min-height: 20rem;
+  max-width: 30rem;
+  max-height: 20rem;
+}
+
+.listing-container img {
+  max-width: 30rem;
+  height: auto;
 }
