@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <title>{% block title %}Auctions{% endblock %}</title>
-        <link href="auctions/static/auctions/styles.css" rel="stylesheet">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
       <div class="container">
@@ -25,10 +25,13 @@
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                  <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'add_listing' %}">Create Auction</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
               </li>
               {% else %}
               <li class="nav-item">
