@@ -1,16 +1,15 @@
-name: Set Environment Variable
+name: Set Test Environment Variable
 
 on:
   workflow_dispatch:
-  
+
 jobs:
-  set_environment_variable:
-    runs-on: unbuntu-latest
+  set_test_environment_variable:
+    runs-on: ubuntu-latest
     steps:
       - name: Set Environment Variable
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run: echo "NEW_TEST_VAR=Test Var" >> $GITHUB_ENV
+        run: echo "TEST_ENV=This is a test environment variable" >> $GITHUB_ENV
 
-      - name: Use New Variable
-        run: echo "Test Var = $NEW_TEST_VAR"
+      - name: Use the New Environment Variable
+        run: |
+          echo "Test Environment Variable (TEST_ENV): $TEST_ENV"
