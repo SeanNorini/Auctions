@@ -8,37 +8,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Debug Test Token
-        run: echo "TEST_TOKEN:$TEST_TOKEN"
-        env:
-          TEST_TOKEN: ${{ secrets.TEST_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Checkout code
-        uses: actions/checkout@v2
-    
-      - name: Create Pull Request
-        id: create_pr
-        uses: actions/github-script@0.9.0
-        with:
-          github-token: ${{ secrets.TEST_TOKEN }}
-          script: |
-            const title = "Create Pull Request";
-            const head = "Dev";
-            const base = "Main";
-            const body = "Description of your pull request.";
+    - name: Create Pull Request
+      id: create_pr
+      uses: actions/github-script@0.9.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const title = "Create Pull Request";
+          const head = "dev";
+          const base = "main";
+          const body = "Description of your pull request.";
 
-            const pr = await github.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title,
-              head,
-              base,
-              body,
-            });
-
+          const pr = await github.pulls.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title,
+            head,
+            base,
+            body,
+          });
             core.setOutput('pr_number', pr.data.number);
             console.log(`Pull Request created: ${pr.data.html_url}`);
             
-      - name: Save Pull Request Number
-        run: echo "PR_NUMBER=${{ steps.create_pr.outputs.pr_number }}" >> $GITHUB_ENV
-             echo $PR_NUMBER
+    - name: Save Pull Request Number
+      run: echo "PR_NUMBER=${{ steps.create_pr.outputs.pr_number }}" >> $GITHUB_ENV
+           echo $PR_NUMBER
