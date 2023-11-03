@@ -26,9 +26,10 @@ jobs:
            head,
            base,
            body,
+           labels: ["Auto"]
          });
 
-         console.log(github.event.number)
+         console.log(pr)
         
 
         
