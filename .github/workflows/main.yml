@@ -27,9 +27,23 @@ jobs:
            base,
            body,
            labels: ["Auto"]
-         });
+         })
 
-         console.log(pr)
+         console.log(pr.data.number)
+
+         await github.pulls.createReview({
+              event: "APPROVE",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.data.numbe,
+            })
+
+         await github.pulls.merge({
+              merge_method: "merge",
+              owner: context.repo.owner,
+              pull_number: pr.data.numbe,
+              repo: context.repo.repo,
+            })
         
 
         
