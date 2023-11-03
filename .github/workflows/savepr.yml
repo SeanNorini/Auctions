@@ -1,0 +1,16 @@
+name: Save Pull Request Number
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  save_pull_request_number:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Save Pull Request Number
+        run: |
+          pr_number=${{ github.event.pull_request.number }}
+          echo "PR_NUMBER=${pr_number}" >> $GITHUB_ENV
