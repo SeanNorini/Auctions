@@ -30,12 +30,7 @@ jobs:
 
          console.log(pr.data.number)
 
-         await github.pulls.createReview({
-              event: "APPROVE",
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pr.data.number,
-            })
+         
 
          await github.pulls.merge({
               merge_method: "merge",
