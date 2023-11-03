@@ -1,15 +1,39 @@
-name: Set Test Environment Variable
+name: Create Pull Request
 
 on:
   workflow_dispatch:
 
 jobs:
-  set_test_environment_variable:
+  create_pull_request:
     runs-on: ubuntu-latest
-    steps:
-      - name: Set Environment Variable
-        run: echo "TEST_ENV=This is a test environment variable" >> $GITHUB_ENV
 
-      - name: Use the New Environment Variable
-        run: |
-          echo "Test Environment Variable (TEST_ENV): $TEST_ENV"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        id: create_pr
+        uses: actions/github-script@0.9.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const title = "Create Pull Request";
+            const head = "Dev";
+            const base = "Main";
+            const body = "Description of your pull request.";
+
+            const pr = await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              head,
+              base,
+              body,
+            });
+
+            core.setOutput('pr_number', pr.data.number);
+            console.log(`Pull Request created: ${pr.data.html_url}`);
+            
+      - name: Save Pull Request Number
+        run: echo "PR_NUMBER=${{ steps.create_pr.outputs.pr_number }}" >> $GITHUB_ENV
+             echo $PR_NUMBER
