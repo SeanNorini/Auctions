@@ -28,16 +28,10 @@ jobs:
            body,
          })
 
-         console.log(pr.data.number)
-
-         
-
          await github.pulls.merge({
               merge_method: "merge",
               owner: context.repo.owner,
               pull_number: pr.data.number,
               repo: context.repo.repo,
             })
-        
 
-        
