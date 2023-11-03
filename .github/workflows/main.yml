@@ -1,0 +1,14 @@
+name: Set Environment Variable
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  set_environment_variable:
+    runs-on: unbuntu-latest
+    steps:
+      - name: Set Environment Variable
+        run: echo "NEW_TEST_VAR=Test Var" >> $GITHUB_ENV
+
+      - name: Use New Variable
+        run: echo "Test Var = $NEW_TEST_VAR"
