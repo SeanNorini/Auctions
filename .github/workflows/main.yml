@@ -27,6 +27,8 @@ jobs:
            base,
            body,
          });
+
+         console.log(github.event.number)
         
 
         
