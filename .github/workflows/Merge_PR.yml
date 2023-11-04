@@ -18,6 +18,4 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const pr = github
-          console.log(job)
-          console.log(inputs)
-          console.log(workflow_run)
+          console.log(context)
