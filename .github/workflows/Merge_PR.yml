@@ -18,7 +18,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const pr = github
-          console.log(pr.base_ref)
-          console.log(pr.ref)
-          console.log(pr.job)
-          console.log(pr.workflow_run)
+          console.log(env)
+          console.log(job)
+          console.log(inputs)
+          console.log(workflow_run)
