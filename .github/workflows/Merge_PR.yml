@@ -17,6 +17,6 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const pr = github.event
+          const pr = github
           console.log(pr)
      
