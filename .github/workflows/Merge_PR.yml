@@ -1,0 +1,22 @@
+name: Merge Pull Request
+on:
+  workflow_run:
+   workflows: ["Create Pull Request"]
+   types: [completed] #requested
+  workflow_dispatch:
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+   
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Merge Pull Request
+      uses: actions/github-script@0.9.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const pr = github.event
+          console.log(pr)
+     
